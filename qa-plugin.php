@@ -2,8 +2,8 @@
         
 /*              
     Plugin Name: Event Timeline Reports
-    Plugin URI: https://github.com/Towhidn/Q2A-timeline
-    Plugin Update Check URI:  https://github.com/Towhidn/Q2A-timeline/raw/master/q2a-timeline/qa-plugin.php
+    Plugin URI: https://github.com/DCookieMonster/q2a-timeline
+    Plugin Update Check URI:  https://raw.githubusercontent.com/DCookieMonster/q2a-timeline/master/qa-plugin.php
     Plugin Description: Timeline visualizion Reports for Q2A Admin
     Plugin Version: 1
     Plugin Date: 2015-04-01

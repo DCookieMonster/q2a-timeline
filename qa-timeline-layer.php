@@ -11,15 +11,15 @@ class qa_html_theme_layer extends qa_html_theme_base {
 	}
 	function head_css() {
 		global $qa_request;
-		if ( ($qa_request == 'timeline') && (qa_get_logged_in_level()>=QA_USER_LEVEL_ADMIN) )
-			$this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'. qa_opt('site_url') . $this->timeline_plugin_url.'include/style.css'.'"/>');
+		// if ( ($qa_request == 'timeline') && (qa_get_logged_in_level()>=QA_USER_LEVEL_ADMIN) )
+		// 	$this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'. qa_opt('site_url') . $this->timeline_plugin_url.'include/style.css'.'"/>');
 		qa_html_theme_base::head_css();
 	}	
 	function head_script(){
 		qa_html_theme_base::head_script();
 		global $qa_request;
-		if ( ($qa_request == 'timeline') && (qa_get_logged_in_level()>=QA_USER_LEVEL_ADMIN) )
-				$this->output('<script type="text/javascript" src="'. qa_opt('site_url') . $this->timeline_plugin_url .'include/easyResponsiveTabs.js"></script>');  
+		// if ( ($qa_request == 'timeline') && (qa_get_logged_in_level()>=QA_USER_LEVEL_ADMIN) )
+		// 		$this->output('<script type="text/javascript" src="'. qa_opt('site_url') . $this->timeline_plugin_url .'include/easyResponsiveTabs.js"></script>');  
 	}	
 	function body_footer(){
 		global $qa_request;

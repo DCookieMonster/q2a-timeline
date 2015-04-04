@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Timeline | Logger</title>
+
+  <style>
+    body, html {
+      font-family: arial, sans-serif;
+      font-size: 11pt;
+    }
+  </style>
+
+  <!-- note: moment.js must be loaded before vis.js, else vis.js uses its embedded version of moment.js -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="../../dist/vis.js"></script>
+  <link href="../../dist/vis.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<h1>
+Event Logger</h1>
+<p>
+    <input id="draw" type="button" value="draw">
+</p>
+<div id="visualization"></div>
+
+<script>
+  // create a dataset with items
+  var now = moment().minutes(0).seconds(0).milliseconds(0);
+  var items = new vis.DataSet({
+    type: {start: 'ISODate', end: 'ISODate' }
+  });
+
+  // create data
+  function createData() {
+    var newData = [];
+    $.ajax({
+    data: '',
+    url: 'test.php',
+    method: 'POST', // or GET
+    success: function(msg) {
+    var i=1;    
+        var arr=  JSON.parse(msg);
+       arr.forEach(function(entry) {
+      newData.push({id: i,params: entry['params'] ,events: entry['event'],username:entry['handle'], content: entry['handle']+" - "+entry['event']  , start: entry['datetime']}); // much much faster than now.clone add days
+      i++;
+});
+     items.clear();
+    items.add(newData);
+    }
+});
+
+   
+  }
+  createData();
+
+  document.getElementById('draw').onclick = createData;
+
+  var container = document.getElementById('visualization');
+  var options = {
+    editable: false,
+    start: now.clone().add(-3, 'days'),
+    end: now.clone().add(11, 'days'),
+    zoomMin: 1000 * 60 * 60 ,          // a day
+    zoomMax: 1000 * 60 * 60 * 24 * 30 * 3*1000  // three months
+  };
+
+
+  var timeline = new vis.Timeline(container, items, options);
+
+  timeline.on('select', function (properties) {
+  document.getElementById('params').innerHTML = this.itemsData._data[properties.items[0]].params;
+    document.getElementById('datetime').innerHTML = this.itemsData._data[properties.items[0]].start;
+    document.getElementById('event').innerHTML = this.itemsData._data[properties.items[0]].events;
+  document.getElementById('username').innerHTML = this.itemsData._data[properties.items[0]].username;
+
+});
+</script>
+<h1>Data:</h1>
+<div id="data">
+<p><strong>username:</strong></p><p id='username'></p>
+<p><strong>datetime:</strong></p><p id='datetime'></p>
+<p><strong>event:</strong></p><p id='event'></p>
+<p><strong>params:</strong></p><p id='params'></p>
+
+</div>
+</body>
+</html>
